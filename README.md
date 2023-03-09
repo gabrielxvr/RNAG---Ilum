@@ -1,4 +1,4 @@
-# Template para a disciplina de Redes Neurais e Algoritmos Genéticos
+#Redes Neurais e Algoritmos Genéticos
 
 Use este template como base para organizar seus experimentos na disciplina de Redes Neurais e Algoritmos Genéticos. 
 
