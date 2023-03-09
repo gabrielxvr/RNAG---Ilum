@@ -8,7 +8,7 @@ Na seção de Algoritmos Genéticos, constam os arquivos "experimento A.01 - bus
 
 Lembretes:
 
-+ Cada notebook deve terá apenas um experimento
++ Cada notebook terá apenas um experimento
 + Jamais haverão importações utilizando o asterisco. Será usado espaços de nome ou será importado apenas o que for usar no seu experimento
 + Códigos serão bem formatados. Sugestão: o formatador black. Ele tem uma versão online disponível em https://black.vercel.app
 + Sempre serão usados nomes claros e representativos para suas funções, classes, métodos e variáveis
