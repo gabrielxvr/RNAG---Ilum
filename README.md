@@ -1,5 +1,7 @@
 # Redes Neurais e Algoritmos Genéticos
 
+![image](https://user-images.githubusercontent.com/107067724/226550518-2169e3c7-1c76-476a-8969-1a94715ee799.png)
+
 Esse repositório é destinado aos experimentos na disciplina de Redes Neurais e Algoritmos Genéticos, da Ilum Escola de Ciência.
 
 ## Algoritmos Genéticos
@@ -8,8 +10,9 @@ Na seção de Algoritmos Genéticos, constam os arquivos "experimento A.01 - bus
 
 Lembretes:
 
++ As informações relativas a cada experimento estarão presentes em seus arquivos e nos documentos "AlgoritmosGeneticos" e "RedesNeurais"
 + Cada notebook terá apenas um experimento
-+ Jamais haverão importações utilizando o asterisco. Será usado espaços de nome ou será importado apenas o que for usar no seu experimento
++ Não haverão importações utilizando o asterisco. Será usado espaços de nome ou será importado apenas o que for usar no seu experimento
 + Códigos serão bem formatados. Sugestão: o formatador black. Ele tem uma versão online disponível em https://black.vercel.app
 + Sempre serão usados nomes claros e representativos para suas funções, classes, métodos e variáveis
 + Sempre será escrito uma docstring nas suas funções, classes e métodos
