@@ -360,7 +360,8 @@ def selecao_por_torneio_ds(populacao_total, chance_de_participar, senha):
         Lista após as alterações feitas pelo torneio 
     """
     index = []
-    melhor_fit = 1e20 # não gostei dessa solução, mas não pensei em nada melhor
+    """solução antiga: melhor_fit = 1e20 # não gostei dessa solução, mas não pensei em nada melhor """
+    melhor_fit = float("inf")
     for i in range(len(populacao_total)):
         if rd.random() < chance_de_participar:
             individuo = populacao_total[i]
@@ -391,4 +392,146 @@ def mutacao_ds(individuo, caracteres):
     individuo[gene_a_ser_mutado] = gene_ds(caracteres)
     return individuo
     
- 
+# função de Himmelblau
+
+def intervalo_com_passo(lim_inf, lim_sup, passo):
+    """ Cria uma lista com um intervalo e com um passo que será a diferença entre os elementos dessa lista
+    
+    Args:
+        lim_inf: limite inferior
+        lim_sup: limite superior
+        passo: diferença entre os elementos sequentes da lista
+        
+    Return:
+        Uma lista com valores númericos em um intervalo
+    """
+    lista_ip = []
+    a = int(lim_inf/passo)
+    b = int(lim_sup/passo)
+    
+    for i in range(a, b):
+        j = round(i*passo, 3)
+        lista_ip.append(j)
+        
+    return lista_ip
+
+
+def gene_fh(dominio_x_y):
+    """ Função que gera, a partir do domínio de x e y, um gene
+    
+    Args:
+        dominio_x_y: valores possíveis para x
+
+    Return:
+        Um valor pertencente ao domínio de x e y
+        
+    Obs:
+        Vamos trabalhar apenas com domínios iguais para x e y
+    """
+    gene = rd.choice(dominio_x_y)
+    return gene
+
+def individuo_fh(n, dominio_x_y):
+    """ Função que gera a partir de um número de genes um domínio, um indivíduo
+    
+    Args:
+        n: número de genes
+        dominio_x_y: valores possíveis para x e y
+        
+    Return:
+        Um indivíduo possível para o problema
+    """
+    individuo = []
+    for _ in range(n):
+        gene = gene_fh(dominio_x_y)
+        individuo.append(gene)
+    return individuo
+
+def populacao_fh(tamanho, n, dominio_x_y):
+    """ Função que gera uma população de indivíduos
+    
+    Args:
+        n: Número de genes de cada indivíduo
+        tamanho: Número de Indivíduos
+        dominio_x_y: valores possíveis para x e y
+    
+    Return:
+        Uma lista contendo cada indivíduo
+    """
+    populacao = []
+    for _ in range(tamanho):
+        populacao.append(individuo_fh(n, dominio_x_y))
+    return populacao
+
+def funcao_objetivo_fh(individuo):
+    """Computa qual é a função objetivo do problema de caixas não binárias
+    
+    Args:
+        individuo: lista contendo os genes das caixas não binárias
+        
+    Return:
+        O valor da função de função de Himmelblau no ponto de x e y correspondentes ao gene
+    """
+    x = individuo[0]
+    y = individuo[1]
+    
+    return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
+
+def funcao_objetivo_pop_fh(populacao):
+    """ Calcula a função objetivo para todos os membros de uma população
+    
+    Args:
+        população: Lista com todos os indivíduos da população
+        
+    Return:
+        Lista contendo o fitness de cada indivíduo
+    """
+    fitness = []
+    for individuo in populacao:
+        fobj = funcao_objetivo_fh(individuo)
+        fitness.append(fobj)
+    return fitness
+
+def selecao_por_torneio_fh(populacao_total, chance_de_participar):
+    """Seleciona uma parcela da população para competir e coloca o valor do vencedor no lugar dos demais
+    
+    Args:
+        população: Lista com todos os indivíduos da população
+        taxa_de_competicao: chance de um individuo participar da competição
+        
+    Return:
+        Lista após as alterações feitas pelo torneio 
+    """
+    index = []
+    """solução antiga: melhor_fit = 1e20 # não gostei dessa solução, mas não pensei em nada melhor """
+    melhor_fit = float("inf")
+    for i in range(len(populacao_total)):
+        if rd.random() < chance_de_participar:
+            individuo = populacao_total[i]
+            fobj = funcao_objetivo_fh(individuo)
+            if fobj < melhor_fit:
+                melhor_fit = fobj
+                indice_melhor_fit = i
+            index.append(i)
+    
+    populacao_selecionada = populacao_total
+    
+    for j in index:
+        populacao_selecionada[j] = populacao_total[indice_melhor_fit]
+    
+    return populacao_selecionada
+
+def mutacao_fh(individuo, dominio_x_y):
+    """Realiza a mutação de um gene na problema da função de Himmelblau
+    
+    Args:
+        individuo: uma lista representando o individuo no problema das caixas binárias
+        dominio_x_y: valores possíveis para x
+        
+    Return:
+        Um indivíduo com um gene mutado.
+    """
+    gene_a_ser_mutado = rd.randint(0, len(individuo) - 1)
+    individuo[gene_a_ser_mutado] = gene_fh(dominio_x_y)
+    return individuo
+
