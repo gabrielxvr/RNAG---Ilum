@@ -6,7 +6,7 @@ Esse repositório é destinado aos experimentos na disciplina de Redes Neurais e
 
 ## Algoritmos Genéticos
 
-Na seção de Algoritmos Genéticos, constam os arquivos "experimento A.01 - busca aleatoria.ipynb" e "experimento A.02 - busca em grade.ipynb", utilizados para resolver dois problemas propostos na primeira aula da disciplina.
+Na seção de Algoritmos Genéticos, constam os arquivos utilizados para resolver os problemas propostos na disciplina.
 
 Lembretes:
 
