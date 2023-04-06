@@ -12,5 +12,5 @@ Para entender como foram realizados cada experimento, é necessário entrar nos 
 - [x] Experimento A.03
 - [x] Experimento A.04
 - [x] Experimento A.05
-- [ ] Experimento A.06
+- [x] Experimento A.06
 - [ ] Experimento A.07
