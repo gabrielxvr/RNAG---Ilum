@@ -1,5 +1,12 @@
 # Experimentos de redes neurais artificiais
 
-Coloque seus experimentos de redes neurais nesta pasta.
+Essa pasta contem alguns experimentos de redes neurais artificiais.
 
-Esceva um README aqui para guiar o leitor sobre seus experimentos realizados.
+Para entender como foram realizados cada experimento, é necessário entrar nos respetivos notebooks, além de conferir as funções definidas no arquivo "funcoes.py".
+
+<!-- Progresso -->
+## Progresso do Projeto <a name="progresso"></a>
+
+- [x] Experimento R.01
+- [x] Experimento R.02
+- [x] Experimento R.03
