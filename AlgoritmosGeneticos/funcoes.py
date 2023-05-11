@@ -866,3 +866,95 @@ def funcao_objetivo_pop_mochila(populacao, objetos, limite, ordem_dos_nomes):
         )
 
     return resultado
+
+# liga ternária
+
+def computa_peso_lt(individuo):
+    """Computa o peso do indivíduo
+    
+    Args:
+        individuo: um indivíduo válido para a liga ternária
+    
+    Return:
+        Um valor correspondente ao peso do indivíduo
+    """
+    
+    peso = 0
+    for cromossomo in individuo:
+        peso += cromossomo[1]
+        
+    return peso
+
+def computa_preco_lt(individuo, preco):
+    """Computa o preco de um indivíduo
+    
+    Args:
+        individuo: um indivíduo válido para a liga ternária
+        preco: dicionário contendo o preço de cada elemento
+        
+    Return:
+        preço da liga ternária
+    """
+    preco_liga = 0
+    for cromossomo in individuo:
+        elemento = cromossomo[0]
+        massa = cromossomo[1]
+        preco_elemento = preco[elemento]
+        preco_liga += massa*preco_elemento/1000
+        
+    return preco_liga
+
+def individuo_lt(n_elementos, massa_maxima, preco):
+    """função que gera indivíduos viáveis, nesse caso, indivíduos em que os genes de massa somem n g.
+    
+    Args:
+        n_elementos: número de elementos utilizados na liga
+        massa_maxima: limite de massa da liga
+        preco: dicionário contendo o preço de cada elemento
+        
+    return:
+        Um indivíduo em que os genes de massa somam n g
+    """
+    
+    elementos = list(preco.keys())
+    
+    individuo = []
+    
+    for _ in range(n_elementos):
+        gene_elemento = rd.choice(elementos)
+        gene_massa = 0
+        cromossomo = [gene_elemento, gene_massa]
+        individuo.append(cromossomo)    
+    
+    peso = computa_peso_lt(individuo)
+    
+    while peso != massa_maxima:
+        ind = rd.randint(0, n_elementos - 1)
+        individuo[ind][1] = 0
+        peso = computa_peso_lt(individuo)
+        val = rd.randint(1, massa_maxima - peso)
+        individuo[ind][1] = val
+        peso = computa_peso_lt(individuo)
+    
+    return individuo
+
+def populacao_lt(n_elementos, massa_maxima, preco, n_individuos):
+    """Cria uma população de indivíduos viáveis para o problema da liga ternária
+    
+    Args:
+        n_elementos: número de elementos utilizados na liga
+        massa_maxima: limite de massa da liga
+        preco: dicionário contendo o preço de cada elemento
+        n_individuos: Tamanho da população
+        
+    Return:
+        Uma população da liga ternária
+    """
+    
+    populacao = []
+    
+    for _ in range(n_individuos):
+        populacao.append(individuo_lt(n_elementos, massa_maxima, preco))
+        
+    return populacao
+        
