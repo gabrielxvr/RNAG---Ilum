@@ -10,3 +10,6 @@ Para entender como foram realizados cada experimento, é necessário entrar nos 
 - [x] Experimento R.01
 - [x] Experimento R.02
 - [x] Experimento R.03
+- [x] Experimento R.04
+- [x] Experimento R.05
+- [x] Experimento R.06
