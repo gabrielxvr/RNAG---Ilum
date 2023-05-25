@@ -916,16 +916,17 @@ def individuo_lt(n_elementos, massa_maxima, preco):
         Um indivíduo em que os genes de massa somam n g
     """
     
-    elementos = list(preco.keys())
+    elementos_possiveis = list(preco.keys())
     
     individuo = []
     
     for _ in range(n_elementos):
-        gene_elemento = rd.choice(elementos)
+        gene_elemento = rd.choice(elementos_possiveis)
         gene_massa = 0
         cromossomo = [gene_elemento, gene_massa]
-        individuo.append(cromossomo)    
-    
+        individuo.append(cromossomo)
+        elementos_possiveis.remove(gene_elemento)
+            
     peso = computa_peso_lt(individuo)
     
     while peso != massa_maxima:
@@ -957,4 +958,118 @@ def populacao_lt(n_elementos, massa_maxima, preco, n_individuos):
         populacao.append(individuo_lt(n_elementos, massa_maxima, preco))
         
     return populacao
+
+def funcao_objetivo_lt(individuo, preco, massa_min_elemento):
+    """Calcula a funcao objetivo do problema de ligas ternárias
+    
+    Args:
+        individuo: um indivíduo válido para as ligas ternárias
+        preco: dicionário contendo o preço de cada elemento
+        massa_min_elemento: masssa mínima por elemento
         
+    Return:
+        fitness do indivíduo
+    """
+    fitness = computa_preco_lt(individuo, preco)
+    
+    for cromossomo in individuo:
+        if cromossomo[1] <= massa_min_elemento:
+            fitness = 0.001
+    
+    return fitness
+
+def funcao_objetivo_pop_lt(populacao, preco, massa_min_elemento):
+    """Calcula a funcao objetivo do problema de ligas ternárias
+    
+    Args:
+        populacao: uma lista de indivíduos válidos para as ligas ternárias
+        preco: dicionário contendo o preço de cada elemento
+        massa_min_elemento: masssa mínima por elemento
+        
+    Return:
+        fitness de cada indivíduo
+    """
+    resultado = []
+    
+    for individuo in populacao:
+        resultado.append(funcao_objetivo_lt(individuo, preco, massa_min_elemento))
+    
+    return resultado
+
+def cruzamento_lt(pai, mae):
+    """realiza um cruzamento entre indivíduos do problema das ligas ternárias
+    
+    Args:
+        pai: indivíduo das ligas ternárias
+        mae: indivíduo das ligas ternárias
+        
+    Return:
+        filho1: indivíduo gerado
+        filho2: indivíduo gerado
+    """
+    genes_massa_mae = []
+    genes_elemento_pai = []
+    genes_elemento_mae = []
+    
+    for cromossomo in mae:
+        genes_massa_mae.append(cromossomo[1])
+        genes_elemento_mae.append(cromossomo[0])
+        
+    for cromossomo in pai:
+        genes_elemento_pai.append(cromossomo[0])
+    
+    filho1 = pai
+    filho2 = mae
+    ind_pai = 0
+    ja_trocados = []
+    for cromossomo in pai:
+        gene = cromossomo[1]
+        if gene in genes_massa_mae and gene not in ja_trocados:
+            ja_trocados.append(gene)
+            ind_mae = genes_massa_mae.index(gene)
+            if filho1[ind_pai][0] not in genes_elemento_mae and filho2[ind_mae][0] not in genes_elemento_pai:
+                filho1[ind_pai][0], filho2[ind_mae][0] = filho2[ind_mae][0], filho1[ind_pai][0]
+            
+        ind_pai = ind_pai + 1
+        
+    return filho1, filho2
+        
+def mutacao_elemento_lt(individuo, preco):
+    """Realiza uma mutação em um gene de elemento
+    
+    Args:
+        individuo: o indivíduo a ser mutado
+        preco: dicionário contendo o preço de cada elemento
+        
+    Return:
+        O indivíduo após a mutação
+    """
+    
+    elementos_possiveis = list(preco.keys())
+    cromossomo_a_ser_mutado = rd.randint(0, len(individuo) - 1)
+    elemento_novo = rd.choice(elementos_possiveis)
+    individuo[cromossomo_a_ser_mutado][0] = elemento_novo
+    
+    return individuo
+
+def mutacao_massa_lt(individuo):
+    """Realiza uma mutação em dois genes de massa
+    
+    Args:
+        individuo: o individuo a ser mutado
+        
+    Return:
+        O indivíduo após a mutação
+    """
+    cromossomo_1_a_ser_mutado = rd.randint(0, len(individuo) - 1)
+    cromossomo_2_a_ser_mutado = cromossomo_1_a_ser_mutado
+    # o indivíduo não pode possuir todos os genes iguais
+    while individuo[cromossomo_2_a_ser_mutado] == individuo[cromossomo_1_a_ser_mutado]: 
+        cromossomo_2_a_ser_mutado = rd.randint(0, len(individuo) - 1)
+        
+    soma_genes = individuo[cromossomo_1_a_ser_mutado][1] + individuo[cromossomo_2_a_ser_mutado][1]
+    individuo[cromossomo_1_a_ser_mutado][1] = rd.randint(0, soma_genes)
+    individuo[cromossomo_2_a_ser_mutado][1] = soma_genes - individuo[cromossomo_1_a_ser_mutado][1]
+    
+    return individuo
+    
