@@ -1046,6 +1046,8 @@ def mutacao_elemento_lt(individuo, preco):
     """
     
     elementos_possiveis = list(preco.keys())
+    for cromossomo in individuo:
+        elementos_possiveis.remove(cromossomo[0])
     cromossomo_a_ser_mutado = rd.randint(0, len(individuo) - 1)
     elemento_novo = rd.choice(elementos_possiveis)
     individuo[cromossomo_a_ser_mutado][0] = elemento_novo
