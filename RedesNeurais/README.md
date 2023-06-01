@@ -13,3 +13,5 @@ Para entender como foram realizados cada experimento, é necessário entrar nos 
 - [x] Experimento R.04
 - [x] Experimento R.05
 - [x] Experimento R.06
+- [x] Experimento R.07
+- [x] Experimento R.08
